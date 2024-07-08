@@ -1,5 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import axios from 'axios';
+import type { Client as C } from '@gradio/client';
 @Controller('txt2img')
 export class Tet2imgController {
   @Post()
@@ -19,46 +20,62 @@ export class Tet2imgController {
       height: number;
     },
   ) {
-    const { Client } = await eval("import('@gradio/client')");
-    const client = await Client.connect(
-      'https://prodia-fast-stable-diffusion.hf.space/',
-    );
-    const result = await client.predict(0, [
-      body.prompt, // 提示词
-      body.negative_prompt ?? '', //反向提示词
-      '3Guofeng3_v34.safetensors [50f420de]', //模型
-      body.steps ?? 20, // Sampling Steps
-      body.sampler_index ?? 'DPM++ 2M Karras', // Sampling Method
-      body.cfg_scale ?? 7, // CFG Scale
-      body.width ?? 512, //width
-      body.height ?? 512, // Height
-      body.seed ?? -1, // Seed
-    ]);
+    body.width > 1024 ? (body.width = 1024) : body.width;
+    body.height > 1024 ? (body.height = 1024) : body.height;
 
-    let images = [];
+    try {
+      const { Client } = await eval("import('@gradio/client')");
 
-    for (const image of result.data) {
-      if (image && image.url) {
-        const res = await axios
-          .get(image.url, {
-            responseType: 'arraybuffer',
-          })
-          .then((res) => res.data)
-          .catch((err) => err);
+      const client = (await Client.connect(
+        'https://prodia-fast-stable-diffusion.hf.space/',
+      )) as C;
+      const result = await client.predict(0, [
+        body.prompt, // 提示词
+        body.negative_prompt ?? '', //反向提示词
+        'anythingV5_PrtRE.safetensors [893e49b9]', //模型
+        body.steps ?? 20, // Sampling Steps
+        body.sampler_index ?? 'DPM++ 2M Karras', // Sampling Method
+        body.cfg_scale ?? 7, // CFG Scale
+        body.width ?? 512, //width
+        body.height ?? 512, // Height
+        body.seed ?? -1, // Seed
+      ]);
 
-        // buff 转 base64
-        const base64 = Buffer.from(res).toString('base64');
+      let images = [];
 
-        images.push(base64);
+      // @ts-expect-error
+      for (const image of result.data) {
+        if (image && image.url) {
+          const res = await axios
+            .get(image.url, {
+              responseType: 'arraybuffer',
+            })
+            .then((res) => res.data)
+            .catch((err) => err);
+
+          // buff 转 base64
+          const base64 = Buffer.from(res).toString('base64');
+
+          images.push(base64);
+        }
       }
+
+      return {
+        images,
+        parameters: {
+          prompt: body.prompt,
+          negative_prompt: body.negative_prompt,
+        },
+        info: JSON.stringify({
+          prompt: body.prompt,
+
+          negative_prompt: body.negative_prompt,
+
+          seed: body.seed,
+        }),
+      };
+    } catch (error) {
+      return error;
     }
-
-    return {
-      images,
-
-      info: JSON.stringify({
-        seed: body.seed,
-      }),
-    };
   }
 }
