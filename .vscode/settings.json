@@ -1,0 +1,13 @@
+{
+  "files.associations": {
+    "*.env.development": "env",
+    "*.env.production": "env"
+  },
+  "[env]": {
+    "editor.defaultFormatter": "IronGeek.vscode-env",
+    "editor.formatOnSave": true
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
+}
