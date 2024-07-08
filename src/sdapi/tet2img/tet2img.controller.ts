@@ -41,9 +41,9 @@ export class Tet2imgController {
         body.seed ?? -1, // Seed
       ]);
 
-      let images = [];
+      const images = [];
 
-      // @ts-expect-error
+      // @ts-ignore
       for (const image of result.data) {
         if (image && image.url) {
           const res = await axios
