@@ -22,8 +22,8 @@ COPY --from=buildstage /app/.env ./.env
 COPY --from=buildstage /app/.npmrc ./.npmrc
 COPY --from=buildstage /app/cp.js ./cp.js
 
-# # 安装依赖
-RUN npm ci --production --registry=https://registry.npmmirror.com
+# # # 安装依赖
+# RUN npm ci --production --registry=https://registry.npmmirror.com
 
 # 设置环境
 ENV NODE_ENV=production
@@ -31,4 +31,4 @@ ENV NODE_ENV=production
 EXPOSE 7860
 
 # 运行项目
-CMD ["npm", "run", "start:prod"]
+CMD ["npm", "run", "start:docker"]
