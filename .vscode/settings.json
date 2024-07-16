@@ -1,7 +1,6 @@
 {
   "files.associations": {
-    "*.env.development": "env",
-    "*.env.production": "env"
+    "*.env": "env"
   },
   "[env]": {
     "editor.defaultFormatter": "IronGeek.vscode-env",

@@ -6,6 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "install": "cp ./node_modules/@tensorflow/tfjs-node/lib/napi-v9/tensorflow.dll ./node_modules/@tensorflow/tfjs-node/lib/napi-v8/tensorflow.dll",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
@@ -22,9 +23,11 @@
   "dependencies": {
     "@gradio/client": "^1.2.1",
     "@nestjs/common": "^10.0.0",
+    "@nestjs/config": "^3.2.3",
     "@nestjs/core": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
     "axios": "^1.7.2",
+    "nsfwjs-api": "^2.0.0",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1"
   },

@@ -1,6 +1,20 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import axios from 'axios';
 import type { Client as C } from '@gradio/client';
+
+import * as nsfwjsApi from 'nsfwjs-api';
+import { join } from 'path';
+// @ts-expect-error
+nsfwjsApi.UseModel = true;
+// 模型位置 默认运行文件夹下model, UseModel为false时无效
+// @ts-expect-error
+nsfwjsApi.model = join(process.cwd(), 'model');
+
+//   copy模型文件夹, UseModel为false时无效
+// 模型文件 https://github.com/infinitered/nsfwjs/tree/master/models/inception_v3
+nsfwjsApi.cpModel();
+// @ts-expect-error
+nsfwjsApi.topk = 1;
 @Controller('txt2img')
 export class Tet2imgController {
   @Post()
@@ -32,7 +46,7 @@ export class Tet2imgController {
       const result = await client.predict(0, [
         body.prompt, // 提示词
         body.negative_prompt ?? '', //反向提示词
-        'anythingV5_PrtRE.safetensors [893e49b9]', //模型
+        process.env.model, //模型
         body.steps ?? 20, // Sampling Steps
         body.sampler_index ?? 'DPM++ 2M Karras', // Sampling Method
         body.cfg_scale ?? 7, // CFG Scale
@@ -53,6 +67,24 @@ export class Tet2imgController {
             .then((res) => res.data)
             .catch((err) => err);
 
+          const nsfwRes = await nsfwjsApi
+            .identificationOfPictures(res)
+            .catch((err) => err);
+
+          if (
+            !nsfwRes ||
+            nsfwRes.code !== 200 ||
+            (nsfwRes.code === 200 &&
+              nsfwRes.msg &&
+              nsfwRes.msg[0] &&
+              ['Porn', 'Hentai', 'Sexy'].includes(nsfwRes.msg[0].className) &&
+              nsfwRes.msg[0].probability >=
+                (isNaN(Number(process.env.probability))
+                  ? 0.6
+                  : Number(process.env.probability)))
+          ) {
+            return false;
+          }
           // buff 转 base64
           const base64 = Buffer.from(res).toString('base64');
 
