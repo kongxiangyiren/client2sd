@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "install": "cp ./node_modules/@tensorflow/tfjs-node/lib/napi-v9/tensorflow.dll ./node_modules/@tensorflow/tfjs-node/lib/napi-v8/tensorflow.dll",
+    "install": "node ./cp.js",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
