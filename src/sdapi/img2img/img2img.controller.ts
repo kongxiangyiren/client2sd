@@ -3,6 +3,8 @@ import axios from 'axios';
 import type { Client as C } from '@gradio/client';
 import * as FormData from 'form-data';
 import nsfwjsApi from '../nsfwjs';
+
+// 图生图
 @Controller('img2img')
 export class Img2imgController {
   @Post()
@@ -27,6 +29,11 @@ export class Img2imgController {
     try {
       body.width > 1024 ? (body.width = 1024) : body.width;
       body.height > 1024 ? (body.height = 1024) : body.height;
+      body.steps > 25 ? (body.steps = 25) : body.height;
+      body.cfg_scale > 20 ? (body.cfg_scale = 20) : body.cfg_scale;
+      body.denoising_strength > 1
+        ? (body.denoising_strength = 1)
+        : body.denoising_strength;
       // console.log(body.init_images);
 
       const formdata = new FormData();

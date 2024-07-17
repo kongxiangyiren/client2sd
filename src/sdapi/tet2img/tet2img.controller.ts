@@ -3,6 +3,8 @@ import axios from 'axios';
 import type { Client as C } from '@gradio/client';
 
 import nsfwjsApi from '../nsfwjs';
+
+// 文生图
 @Controller('txt2img')
 export class Tet2imgController {
   @Post()
@@ -24,6 +26,8 @@ export class Tet2imgController {
   ) {
     body.width > 1024 ? (body.width = 1024) : body.width;
     body.height > 1024 ? (body.height = 1024) : body.height;
+    body.steps > 25 ? (body.steps = 25) : body.height;
+    body.cfg_scale > 20 ? (body.cfg_scale = 20) : body.cfg_scale;
 
     try {
       const { Client } = await eval("import('@gradio/client')");
