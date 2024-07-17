@@ -10,6 +10,14 @@
 
 3、模型修改和鉴图修改,请修改`.env`
 
+## 1panel 运行
+
+可以按照如图方式运行
+
+如果koishi也是1panel创建的,novelai网址可以填 `http://client2sd:7860`
+
+![alt text](image.png)
+
 ## docker 运行 (推荐)
 
 1、编译镜像
@@ -24,10 +32,10 @@ docker build -t client2sd .
 docker run --restart=always -d -p 7860:7860 -v ./.env:/app/.env --name client2sd client2sd
 ```
 
-
 ## windows 运行
 
 ### 必要环境
+
 1、安装python 3.6以上到3.12以下的版本
 
 2、安装vs2022
@@ -38,7 +46,6 @@ vs2022下载地址：https://visualstudio.microsoft.com/zh-hans/visual-cpp-build
 
 ![alt text](cfe38fe97eb5396c600dd14c0ba447cf.png)
 
-
 ### 安装
 
 ```sh
@@ -46,7 +53,7 @@ npm i && npm run build
 ```
 
 ### 运行
+
 ```
 npm run start:prod
 ```
-
