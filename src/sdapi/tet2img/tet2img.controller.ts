@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Logger, Post } from '@nestjs/common';
 import axios from 'axios';
 import type { Client as C } from '@gradio/client';
 
@@ -51,6 +51,7 @@ export class Tet2imgController {
 
       // @ts-ignore
       for (const image of result.data) {
+        Logger.log('文生图', image.url);
         if (image && image.url) {
           const res = await axios
             .get(image.url, {

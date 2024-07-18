@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Logger, Post } from '@nestjs/common';
 import axios from 'axios';
 import type { Client as C } from '@gradio/client';
 import * as FormData from 'form-data';
@@ -112,6 +112,7 @@ export class Img2imgController {
       // @ts-ignore
       for (const image of result.data) {
         if (image && image.url) {
+          Logger.log('图生图', image.url);
           const res = await axios
             .get(image.url, {
               responseType: 'arraybuffer',
