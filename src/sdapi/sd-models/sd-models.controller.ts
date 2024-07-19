@@ -80,7 +80,7 @@ export class SdModelsController {
     }
 
     const list = res.data.named_endpoints['/txt2img'].parameters[2].type.enum;
-    let models = [];
+    const models = [];
 
     for (const item of list) {
       models.push({

@@ -49,8 +49,7 @@ export class Tet2imgController {
 
       const images = [];
 
-      // @ts-ignore
-      for (const image of result.data) {
+      for (const image of result.data as Array<{ url: string }>) {
         Logger.log('文生图', image.url);
         if (image && image.url) {
           const res = await axios

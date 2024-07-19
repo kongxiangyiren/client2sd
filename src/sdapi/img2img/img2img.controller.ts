@@ -109,8 +109,7 @@ export class Img2imgController {
 
       const images = [];
 
-      // @ts-ignore
-      for (const image of result.data) {
+      for (const image of result.data as Array<{ url: string }>) {
         if (image && image.url) {
           Logger.log('图生图', image.url);
           const res = await axios
