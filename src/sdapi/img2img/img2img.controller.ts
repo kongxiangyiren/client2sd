@@ -111,7 +111,7 @@ export class Img2imgController {
 
       for (const image of result.data as Array<{ url: string }>) {
         if (image && image.url) {
-          Logger.log('图生图', image.url);
+          Logger.log(image.url, '图生图');
           const res = await axios
             .get(image.url, {
               responseType: 'arraybuffer',
