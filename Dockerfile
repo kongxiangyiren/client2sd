@@ -1,5 +1,5 @@
 # 打包
-FROM node:22.2.0 AS buildstage 
+FROM node:22.2.0-alpine AS buildstage 
 
 WORKDIR /app
 COPY ./ ./
@@ -10,7 +10,7 @@ RUN npm run build
 # ======================== 上：打包  下：运行 ========================
 
 # 设置基础镜像
-FROM node:22.2.0
+FROM node:22.2.0-alpine
 
 # 设置工作目录
 WORKDIR /app
@@ -20,7 +20,6 @@ COPY --from=buildstage /app/package.json ./package.json
 COPY --from=buildstage /app/package-lock.json ./package-lock.json
 COPY --from=buildstage /app/.env ./.env
 COPY --from=buildstage /app/.npmrc ./.npmrc
-COPY --from=buildstage /app/cp.js ./cp.js
 
 # # # 安装依赖
 # RUN npm ci --production --registry=https://registry.npmmirror.com

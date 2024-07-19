@@ -4,11 +4,13 @@
 
 ## 说明
 
-1、基于`https://huggingface.co/spaces/prodia/fast-stable-diffusion`
+1、这个分支没有鉴图功能,要鉴图功能请切换`main`分支
 
-2、调用地址：`https://prodia-fast-stable-diffusion.hf.space/`
+2、基于`https://huggingface.co/spaces/prodia/fast-stable-diffusion`
 
-3、模型修改和鉴图修改,请修改`.env`
+3、调用地址：`https://prodia-fast-stable-diffusion.hf.space/`
+
+4、模型修改请修改`.env`
 
 ## 1panel 运行
 
@@ -33,18 +35,6 @@ docker run --restart=always -d -p 7860:7860 -v ./.env:/app/.env --name client2sd
 ```
 
 ## windows 运行
-
-### 必要环境
-
-1、安装python 3.6以上到3.12以下的版本
-
-2、安装vs2022
-
-vs2022下载地址：https://visualstudio.microsoft.com/zh-hans/visual-cpp-build-tools/
-
-选择 `使用C++的桌面开发` ,然后点击安装
-
-![alt text](cfe38fe97eb5396c600dd14c0ba447cf.png)
 
 ### 安装
 

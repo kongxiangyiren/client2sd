@@ -2,7 +2,6 @@ import { Body, Controller, Logger, Post } from '@nestjs/common';
 import axios from 'axios';
 import type { Client as C } from '@gradio/client';
 import * as FormData from 'form-data';
-import nsfwjsApi from '../nsfwjs';
 
 // 图生图
 @Controller('img2img')
@@ -109,8 +108,7 @@ export class Img2imgController {
 
       const images = [];
 
-      // @ts-ignore
-      for (const image of result.data) {
+      for (const image of result.data as Array<{ url: string }>) {
         if (image && image.url) {
           Logger.log('图生图', image.url);
           const res = await axios
@@ -119,25 +117,6 @@ export class Img2imgController {
             })
             .then((res) => res.data)
             .catch((err) => err);
-
-          const nsfwRes = await nsfwjsApi
-            .identificationOfPictures(res)
-            .catch((err) => err);
-
-          if (
-            !nsfwRes ||
-            nsfwRes.code !== 200 ||
-            (nsfwRes.code === 200 &&
-              nsfwRes.msg &&
-              nsfwRes.msg[0] &&
-              ['Porn', 'Hentai', 'Sexy'].includes(nsfwRes.msg[0].className) &&
-              nsfwRes.msg[0].probability >=
-                (isNaN(Number(process.env.probability))
-                  ? 0.6
-                  : Number(process.env.probability)))
-          ) {
-            return false;
-          }
 
           // buff 转 base64
           const base64 = Buffer.from(res).toString('base64');
