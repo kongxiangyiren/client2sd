@@ -64,7 +64,6 @@ export class Tet2imgController {
           const nsfwRes = await nsfwjsApi
             .identificationOfPictures(res)
             .catch((err) => err);
-          console.log(nsfwRes.msg);
 
           if (!nsfwRes || nsfwRes.code !== 200) {
             return false;
