@@ -3,6 +3,8 @@ import axios from 'axios';
 import type { Client as C } from '@gradio/client';
 
 import nsfwjsApi from '../nsfwjs';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 
 // 文生图
 @Controller('txt2img')
@@ -62,20 +64,49 @@ export class Tet2imgController {
           const nsfwRes = await nsfwjsApi
             .identificationOfPictures(res)
             .catch((err) => err);
+          console.log(nsfwRes.msg);
 
-          if (
-            !nsfwRes ||
-            nsfwRes.code !== 200 ||
-            (nsfwRes.code === 200 &&
-              nsfwRes.msg &&
-              nsfwRes.msg[0] &&
-              ['Porn', 'Hentai', 'Sexy'].includes(nsfwRes.msg[0].className) &&
-              nsfwRes.msg[0].probability >=
-                (isNaN(Number(process.env.probability))
-                  ? 0.6
-                  : Number(process.env.probability)))
-          ) {
+          if (!nsfwRes || nsfwRes.code !== 200) {
             return false;
+          }
+
+          if (nsfwRes.code === 200 && nsfwRes.msg) {
+            for (const item of nsfwRes.msg) {
+              if (
+                item.className &&
+                (item.className === 'Hentai' ||
+                  item.className === 'Porn' ||
+                  item.className === 'Sexy')
+              ) {
+                if (
+                  item.probability >
+                  (isNaN(Number(process.env.probability))
+                    ? Number(process.env.probability)
+                    : 0.3)
+                ) {
+                  return {
+                    images: [
+                      Buffer.from(
+                        readFileSync(join(process.cwd(), '/public/nsfw.png')),
+                      ).toString('base64'),
+                    ],
+                    parameters: {
+                      prompt: body.prompt,
+                      negative_prompt: body.negative_prompt,
+                    },
+                    info: JSON.stringify({
+                      prompt: body.prompt,
+
+                      negative_prompt: body.negative_prompt,
+
+                      seed: body.seed,
+                    }),
+                  };
+                }
+              } else if (!item.className || !item.probability) {
+                return false;
+              }
+            }
           }
           // buff 转 base64
           const base64 = Buffer.from(res).toString('base64');

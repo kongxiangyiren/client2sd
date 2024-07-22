@@ -10,6 +10,6 @@ nsfwjsApi.model = join(process.cwd(), 'model');
 // 模型文件 https://github.com/infinitered/nsfwjs/tree/master/models/inception_v3
 nsfwjsApi.cpModel();
 // @ts-expect-error 解决报错
-nsfwjsApi.topk = 1;
+nsfwjsApi.topk = 5;
 
 export default nsfwjsApi;
