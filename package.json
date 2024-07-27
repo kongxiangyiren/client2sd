@@ -6,6 +6,8 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "build:exe": "npm run build:ncc && node --experimental-sea-config sea-config.json && node build.exe.js",
+    "build:ncc": "rimraf ./build && npx @vercel/ncc build src/main.ts -m -o build",
     "vercel-build": "nest build",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -22,12 +24,12 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@gradio/client": "^1.2.1",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.2.3",
     "@nestjs/core": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
     "axios": "^1.7.2",
+    "node-gradio-client": "^0.14.6",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1"
   },

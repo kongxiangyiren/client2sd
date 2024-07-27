@@ -1,6 +1,6 @@
 import { Body, Controller, Logger, Post } from '@nestjs/common';
 import axios from 'axios';
-import type { Client as C } from '@gradio/client';
+import { client } from 'node-gradio-client';
 
 // 文生图
 @Controller('txt2img')
@@ -28,12 +28,10 @@ export class Tet2imgController {
     body.cfg_scale > 20 ? (body.cfg_scale = 20) : body.cfg_scale;
 
     try {
-      const { Client } = await eval("import('@gradio/client')");
-
-      const client = (await Client.connect(
+      const app = await client(
         'https://prodia-fast-stable-diffusion.hf.space/',
-      )) as C;
-      const result = await client.predict(0, [
+      );
+      const result = await app.predict(0, [
         body.prompt, // 提示词
         body.negative_prompt ?? '', //反向提示词
         process.env.model, //模型

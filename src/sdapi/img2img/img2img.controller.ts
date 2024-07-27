@@ -1,6 +1,6 @@
 import { Body, Controller, Logger, Post } from '@nestjs/common';
 import axios from 'axios';
-import type { Client as C } from '@gradio/client';
+import { client } from 'node-gradio-client';
 import * as FormData from 'form-data';
 
 // 图生图
@@ -70,13 +70,10 @@ export class Img2imgController {
         return img;
       }
 
-      const { Client } = await eval("import('@gradio/client')");
-
-      const client = (await Client.connect(
+      const app = await client(
         'https://prodia-fast-stable-diffusion.hf.space/',
-      )) as C;
-
-      const result = await client.predict(1, [
+      );
+      const result = await app.predict(1, [
         {
           meta: { _type: 'gradio.FileData' },
           mime_type: body.init_images[0]
