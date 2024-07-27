@@ -23,8 +23,9 @@ jobs:
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
-        node-version: 20
-        cache: 'npm'
+        with:
+          node-version: '20.15.0'
+          cache: 'npm'
 
       - run: npm i
       - run: npm run build:exe
