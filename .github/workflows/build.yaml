@@ -37,11 +37,11 @@ jobs:
 
       - name: upx windows
         if: matrix.os == 'windows-latest'
-        run: upx -9 ./dist/hello.exe
+        run: cd dist && upx -9 hello.exe
 
       - name: upx macos or ubuntu
         if: matrix.os != 'windows-latest'
-        run: upx -9 ./dist/hello
+        run: cd dist && upx -9 hello
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
