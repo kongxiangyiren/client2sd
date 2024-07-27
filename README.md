@@ -12,6 +12,10 @@
 
 4、模型修改请修改`.env`
 
+## vercel 部署
+
+[![部署](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/kongxiangyiren/client2sd/tree/op)
+
 ## 1panel 运行
 
 可以按照如图方式运行
