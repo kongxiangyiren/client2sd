@@ -31,7 +31,7 @@ jobs:
       - run: npm run build:exe
 
       - name: Install UPX
-        if: matrix.os != 'macos-latest'
+        if: matrix.os == 'windows-latest'
         uses: crazy-max/ghaction-upx@v3
         with:
           install-only: true
