@@ -1,6 +1,6 @@
 const nsfwjsApi = require('nsfwjs-api');
 const { join } = require('path');
-const { copyFileSync, rmSync } = require('fs');
+const { rmSync, cpSync } = require('fs');
 nsfwjsApi.UseModel = true;
 nsfwjsApi.model = join(process.cwd(), 'build/model');
 
@@ -8,7 +8,11 @@ nsfwjsApi.model = join(process.cwd(), 'build/model');
 // 模型文件 https://github.com/infinitered/nsfwjs/tree/master/models/inception_v3
 nsfwjsApi.cpModel();
 
-copyFileSync('./.env', './build/.env');
+cpSync('./.env', './build/.env');
+cpSync('./public', './build/public', {
+  recursive: true,
+  force: true,
+});
 
 // 删除多余
 if (process.platform === 'linux') {
