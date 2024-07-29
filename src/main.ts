@@ -1,3 +1,5 @@
+// 项目启动前设置时区
+process.env.TZ = 'Asia/Shanghai';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { Logger } from '@nestjs/common';
