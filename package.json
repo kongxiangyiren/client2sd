@@ -6,6 +6,8 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "build:exe": "npm run build:ncc && node --experimental-sea-config sea-config.json && node build.exe.js",
+    "build:ncc": "rimraf ./build && npx @vercel/ncc build src/main.ts -m -o build/build && node ncc.cp.js",
     "install": "node ./cp.js",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
