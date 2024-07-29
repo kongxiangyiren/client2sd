@@ -1,6 +1,6 @@
 const nsfwjsApi = require('nsfwjs-api');
 const { join } = require('path');
-const { rmSync, cpSync, unlinkSync } = require('fs');
+const { rmSync, cpSync } = require('fs');
 nsfwjsApi.UseModel = true;
 nsfwjsApi.model = join(process.cwd(), 'build/model');
 
@@ -15,15 +15,8 @@ cpSync('./public', './build/public', {
 });
 
 // 删除多余
-if (process.platform === 'linux') {
-  unlinkSync('./build/build/deps/lib/libtensorflow.so.2.9.1');
-  unlinkSync('./build/build/deps/lib/libtensorflow_framework.so.2.9.1');
-} else if (process.platform === 'win32') {
+if (process.platform === 'win32') {
   rmSync('./build/build/deps', { recursive: true, force: true });
-} else if (process.platform === 'darwin') {
-  unlinkSync('./build/build/deps/lib/libtensorflow.2.7.0.dylib');
-
-  unlinkSync('./build/build/deps/lib/libtensorflow_framework.2.7.0.dylib');
 }
 
 rmSync('./build/build/lib/napi-v9', { recursive: true, force: true });
