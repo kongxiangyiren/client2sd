@@ -14,10 +14,5 @@ cpSync('./public', './build/public', {
   force: true,
 });
 
-// 删除多余
-if (process.platform === 'win32') {
-  rmSync('./build/build/deps', { recursive: true, force: true });
-}
-
 rmSync('./build/build/lib/napi-v9', { recursive: true, force: true });
 rmSync('./build/build/prebuilds', { recursive: true, force: true });
