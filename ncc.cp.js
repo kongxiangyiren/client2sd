@@ -11,6 +11,6 @@ nsfwjsApi.cpModel();
 copyFileSync('./.env', './build/.env');
 
 // 删除多余
-rmSync('./build/build/deps', { recursive: true, force: true });
-rmSync('./build/build/lib/napi-v9', { recursive: true, force: true });
+// rmSync('./build/build/deps', { recursive: true, force: true });
+// rmSync('./build/build/lib/napi-v9', { recursive: true, force: true });
 rmSync('./build/build/prebuilds', { recursive: true, force: true });
