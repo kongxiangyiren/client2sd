@@ -20,7 +20,7 @@ COPY --from=buildstage /app/package.json ./package.json
 COPY --from=buildstage /app/package-lock.json ./package-lock.json
 COPY --from=buildstage /app/.env ./.env
 COPY --from=buildstage /app/.npmrc ./.npmrc
-
+COPY --from=buildstage /app/public ./public
 # # # 安装依赖
 # RUN npm ci --production --registry=https://registry.npmmirror.com
 
