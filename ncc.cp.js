@@ -29,12 +29,12 @@ if (process.platform === 'linux') {
   rmSync('./build/build/deps', { recursive: true, force: true });
 } else if (process.platform === 'darwin') {
   renameSync(
-    './build/build/deps/lib/libtensorflow.2.7.0.dylib',
+    './build/build/deps/lib/libtensorflow.2.9.1.dylib',
     './build/build/deps/lib/libtensorflow.2.dylib',
   );
 
   renameSync(
-    './build/build/deps/lib/libtensorflow_framework.2.7.0.dylib',
+    './build/build/deps/lib/libtensorflow_framework.2.9.1.dylib',
     './build/build/deps/lib/libtensorflow_framework.2.dylib',
   );
 }
