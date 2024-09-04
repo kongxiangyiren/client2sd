@@ -1,6 +1,7 @@
 const nsfwjsApi = require('nsfwjs-api');
-const { join } = require('path');
+const { join, parse } = require('path');
 const { rmSync, cpSync, renameSync } = require('fs');
+const { globSync } = require('glob');
 nsfwjsApi.UseModel = true;
 nsfwjsApi.model = join(process.cwd(), 'build/model');
 
@@ -14,29 +15,38 @@ cpSync('./public', './build/public', {
   force: true,
 });
 
+function libRename(libs) {
+  for (let item of libs) {
+    for (let i = 0; i < libs.length; i++) {
+      if (
+        item.name !== libs[i].name &&
+        item.name.indexOf(libs[i].name) !== -1
+      ) {
+        renameSync(join(item.dir, item.base), join(item.dir, libs[i].base));
+      }
+    }
+  }
+}
+
 // 删除多余
 if (process.platform === 'linux') {
-  renameSync(
-    './build/build/deps/lib/libtensorflow.so.2.9.1',
-    './build/build/deps/lib/libtensorflow.so.2',
-  );
+  const s = globSync('build/build/deps/lib/*');
 
-  renameSync(
-    './build/build/deps/lib/libtensorflow_framework.so.2.9.1',
-    './build/build/deps/lib/libtensorflow_framework.so.2',
-  );
+  let libs = [];
+  for (let i = 0; i < s.length; i++) {
+    libs.push(parse(s[i]));
+  }
+  libRename(libs);
 } else if (process.platform === 'win32') {
   rmSync('./build/build/deps', { recursive: true, force: true });
 } else if (process.platform === 'darwin') {
-  renameSync(
-    './build/build/deps/lib/libtensorflow.2.9.1.dylib',
-    './build/build/deps/lib/libtensorflow.2.dylib',
-  );
+  const s = globSync('build/build/deps/lib/*.dylib');
 
-  renameSync(
-    './build/build/deps/lib/libtensorflow_framework.2.9.1.dylib',
-    './build/build/deps/lib/libtensorflow_framework.2.dylib',
-  );
+  let libs = [];
+  for (let i = 0; i < s.length; i++) {
+    libs.push(parse(s[i]));
+  }
+  libRename(libs);
 }
 
 rmSync('./build/build/lib/napi-v9', { recursive: true, force: true });
