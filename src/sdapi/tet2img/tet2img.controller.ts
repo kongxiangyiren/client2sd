@@ -28,9 +28,7 @@ export class Tet2imgController {
     body.cfg_scale > 20 ? (body.cfg_scale = 20) : body.cfg_scale;
 
     try {
-      const app = await client(
-        'https://prodia-fast-stable-diffusion.hf.space/',
-      );
+      const app = await client('https://zugas-fast-stable-diffusion.hf.space/');
       const result = await app.predict(0, [
         body.prompt, // 提示词
         body.negative_prompt ?? '', //反向提示词

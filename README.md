@@ -6,9 +6,9 @@
 
 1、这个分支没有鉴图功能,要鉴图功能请切换`main`分支
 
-2、基于`https://huggingface.co/spaces/prodia/fast-stable-diffusion`
+2、基于`https://huggingface.co/spaces/zugas/fast-stable-diffusion`
 
-3、调用地址：`https://prodia-fast-stable-diffusion.hf.space/`
+3、调用地址：`https://zugas-fast-stable-diffusion.hf.space/`
 
 4、模型修改请修改`.env`
 
