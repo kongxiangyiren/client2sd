@@ -61,7 +61,7 @@ export class Img2imgController {
 
       const img = await axios({
         method: 'post',
-        url: 'https://prodia-fast-stable-diffusion.hf.space/upload',
+        url: 'https://zugas-fast-stable-diffusion.hf.space/upload',
         headers: {
           'Content-Type': formdata.getHeaders()['content-type'],
           'User-Agent':
@@ -74,7 +74,7 @@ export class Img2imgController {
       }
 
       const app = await client(
-        'https://prodia-fast-stable-diffusion.hf.space/',
+        'https://zugas-fast-stable-diffusion.hf.space/',
       );
       const result = await app.predict(1, [
         {
@@ -92,7 +92,7 @@ export class Img2imgController {
               .split('/')[1],
           path: img.data[0],
           url:
-            'https://prodia-fast-stable-diffusion.hf.space/file=' + img.data[0],
+            'https://zugas-fast-stable-diffusion.hf.space/file=' + img.data[0],
         },
         body.denoising_strength ?? 0.7, // Denoising Strength
         body.prompt, // 提示词

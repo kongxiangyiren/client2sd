@@ -33,7 +33,7 @@ export class Tet2imgController {
 
     try {
       const app = await client(
-        'https://prodia-fast-stable-diffusion.hf.space/',
+        'https://zugas-fast-stable-diffusion.hf.space/',
       );
       const result = await app.predict(0, [
         body.prompt, // 提示词

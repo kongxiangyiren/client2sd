@@ -73,7 +73,7 @@ export class SdModelsController {
     // ] as const;
 
     const res = await axios
-      .get('https://prodia-fast-stable-diffusion.hf.space/info')
+      .get('https://zugas-fast-stable-diffusion.hf.space/info')
       .catch((err) => err);
     if (!res) {
       return false;

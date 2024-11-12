@@ -6,9 +6,9 @@
 
 ## 说明
 
-1、基于`https://huggingface.co/spaces/prodia/fast-stable-diffusion`
+1、基于`https://huggingface.co/spaces/zugas/fast-stable-diffusion`
 
-2、调用地址：`https://prodia-fast-stable-diffusion.hf.space/`
+2、调用地址：`https://zugas-fast-stable-diffusion.hf.space/`
 
 3、模型修改和鉴图修改,请修改`.env`
 
